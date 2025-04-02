@@ -5,6 +5,7 @@ const VehiculeSchema = new mongoose.Schema({
     marque: { type: String, required: true },
     modele: { type: String, required: true },
     annee: { type: String, required: true },
+    matricule: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Vehicule', VehiculeSchema);

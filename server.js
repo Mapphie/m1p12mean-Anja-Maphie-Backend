@@ -73,6 +73,11 @@ app.use('/devis', require('./routes/devisRoutes'));
 app.use('/manager/devis', require('./routes/devisRoutes'));
 app.use('/client/devis', require('./routes/devisRoutes'));
 
+app.use('/vehicules', require('./routes/vehiculeRoutes'));
+app.use('/client/vehicules', require('./routes/vehiculeRoutes'));
+
+
+
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
 
 
