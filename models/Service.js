@@ -7,6 +7,7 @@ const ServiceSchema = new mongoose.Schema({
     duree: { type: Number, required: true }, // Durée estimée en minutes
     prix: { type: Number, required: true }, // Durée estimée en minutes
     image: { type: String }, // Durée estimée en minutes
+    quantite: { type: Number, required: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Service', ServiceSchema);
