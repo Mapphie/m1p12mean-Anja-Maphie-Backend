@@ -21,6 +21,9 @@ const corsOptions = {
 // Appliquer CORS à toutes les routes
 app.use(cors(corsOptions));
 
+app.use(express.json());
+
+
 // Option pour gérer les requêtes préalables (OPTIONS)
 app.options('*', cors());
 
@@ -39,7 +42,7 @@ app.use(expressSession({
         secure: false, // À mettre à `true` si tu utilises HTTPS
         httpOnly: true, // Empêche l'accès au cookie depuis le client (sécurise un peu contre les XSS)
         maxAge: 1000 * 60 * 60 * 24, // Durée de vie du cookie, ici 1 jour
-      },    
+    },
 }));
 
 const isAuthenticatedManager = (req, res, next) => {
