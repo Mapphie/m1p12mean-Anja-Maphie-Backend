@@ -57,7 +57,6 @@ const isAuthenticatedMecanicien = (req, res, next) => {
     }
 };
 const isAuthenticatedClient = (req, res, next) => {
-    console.log(req.session);
     if (req.session.user && req.session.user.idrole.role === "Client") {
         next();
     } else {
