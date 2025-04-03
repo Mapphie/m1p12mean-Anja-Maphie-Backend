@@ -19,6 +19,8 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.options('*', cors()); // Autoriser toutes les méthodes OPTIONS
+
 //Connexion MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
