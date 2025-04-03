@@ -39,7 +39,8 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: true, // À mettre à `true` si tu utilises HTTPS
+        // secure: true, // À mettre à `true` si tu utilises HTTPS
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true, // Empêche l'accès au cookie depuis le client (sécurise un peu contre les XSS)
         maxAge: 1000 * 60 * 60 * 24, // Durée de vie du cookie, ici 1 jour
     },
