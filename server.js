@@ -34,15 +34,19 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB connecté")).catch(err => console.log(err));
 
 //ajout de session après login
+const MongoStore = require('connect-mongo');
 app.use(expressSession({
     secret: 'maphieanjaP14',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+    }),
     cookie: {
-        // secure: true, // À mettre à `true` si tu utilises HTTPS
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true, // Empêche l'accès au cookie depuis le client (sécurise un peu contre les XSS)
-        maxAge: 1000 * 60 * 60 * 24, // Durée de vie du cookie, ici 1 jour
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: 'none',
     },
 }));
 
