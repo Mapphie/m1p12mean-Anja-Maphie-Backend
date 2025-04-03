@@ -55,13 +55,13 @@ app.use(expressSession({
     },
 }));
 
-// Vérification des cookies et des sessions
-app.use((req, res, next) => {
+// Middleware pour vérifier les cookies et les sessions (appliqué uniquement aux routes nécessitant une session)
+const sessionMiddleware = (req, res, next) => {
     if (!req.session) {
         return res.status(500).json({ message: "Erreur de session, veuillez réessayer." });
     }
     next();
-});
+};
 
 const isAuthenticatedManager = (req, res, next) => {
     if (req.session.user && req.session.user.idrole.role === "Manager") {
@@ -85,21 +85,21 @@ const isAuthenticatedClient = (req, res, next) => {
     }
 };
 
-//Routes
-
-app.use('/manager', isAuthenticatedManager, (req, res, next) => {
+//Routes nécessitant une session
+app.use('/manager', sessionMiddleware, isAuthenticatedManager, (req, res, next) => {
     // Ajoutez ici des routes spécifiques pour les managers si nécessaire
     next();
 });
-app.use('/client', isAuthenticatedClient, (req, res, next) => {
+app.use('/client', sessionMiddleware, isAuthenticatedClient, (req, res, next) => {
     // Ajoutez ici des routes spécifiques pour les clients si nécessaire
     next();
 });
-app.use('/mecanicien', isAuthenticatedMecanicien, (req, res, next) => {
+app.use('/mecanicien', sessionMiddleware, isAuthenticatedMecanicien, (req, res, next) => {
     // Ajoutez ici des routes spécifiques pour les mécaniciens si nécessaire
     next();
 });
 
+//Routes publiques ou sans session
 app.use('/articles', require('./routes/articleRoutes'));
 
 app.use('/employes', require('./routes/employeRoutes'));
