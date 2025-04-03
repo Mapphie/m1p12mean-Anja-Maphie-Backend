@@ -17,28 +17,14 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => {
-    console.log("MongoDB connecté");
-}).catch(err => {
-    console.error("Erreur de connexion à MongoDB :", err);
-    process.exit(1); // Arrête le serveur en cas d'erreur critique
-});
+}).then(() => console.log("MongoDB connecté")).catch(err => console.log(err));
 
 //ajout de session après login
-const MongoStore = require('connect-mongo');
 app.use(expressSession({
     secret: 'maphieanjaP14',
     resave: false,
     saveUninitialized: false,
 }));
-
-// Middleware pour vérifier les cookies et les sessions (appliqué uniquement aux routes nécessitant une session)
-const sessionMiddleware = (req, res, next) => {
-    if (!req.session) {
-        return res.status(500).json({ message: "Erreur de session, veuillez réessayer." });
-    }
-    next();
-};
 
 const isAuthenticatedManager = (req, res, next) => {
     if (req.session.user && req.session.user.idrole.role === "Manager") {
@@ -62,21 +48,12 @@ const isAuthenticatedClient = (req, res, next) => {
     }
 };
 
-//Routes nécessitant une session
-app.use('/manager', sessionMiddleware, isAuthenticatedManager, (req, res, next) => {
-    // Ajoutez ici des routes spécifiques pour les managers si nécessaire
-    next();
-});
-app.use('/client', sessionMiddleware, isAuthenticatedClient, (req, res, next) => {
-    // Ajoutez ici des routes spécifiques pour les clients si nécessaire
-    next();
-});
-app.use('/mecanicien', sessionMiddleware, isAuthenticatedMecanicien, (req, res, next) => {
-    // Ajoutez ici des routes spécifiques pour les mécaniciens si nécessaire
-    next();
-});
+//Routes
 
-//Routes publiques ou sans session
+app.use('/manager', isAuthenticatedManager);
+app.use('/client', isAuthenticatedClient);
+app.use('/mecanicien', isAuthenticatedMecanicien);
+
 app.use('/articles', require('./routes/articleRoutes'));
 
 app.use('/employes', require('./routes/employeRoutes'));
@@ -98,5 +75,7 @@ app.use('/client/devis', require('./routes/devisRoutes'));
 
 app.use('/vehicules', require('./routes/vehiculeRoutes'));
 app.use('/client/vehicules', require('./routes/vehiculeRoutes'));
+
+
 
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
