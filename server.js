@@ -10,19 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 //Middleware
-const corsOptions = {
-    // origin: 'http://localhost:4200',
-    origin: 'https://m1p12mean-anja-maphie.netlify.app',  // L'URL de ton front-end
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true,  // Permet d'envoyer les cookies et autres informations de session
-};
-
-// Appliquer CORS à toutes les routes
-app.use(cors(corsOptions));
-
-// Option pour gérer les requêtes préalables (OPTIONS)
-app.options('*', cors());
+app.use(cors());
+app.use(express.json());
 
 // Middleware pour parser le JSON et les données envoyées via formulaire
 app.use(express.json());
@@ -39,11 +28,6 @@ app.use(expressSession({
     secret: 'maphieanjaP14',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        secure: false, // À mettre à `true` si tu utilises HTTPS
-        httpOnly: true, // Empêche l'accès au cookie depuis le client (sécurise un peu contre les XSS)
-        maxAge: 1000 * 60 * 60 * 24, // Durée de vie du cookie, ici 1 jour
-      },    
 }));
 
 const isAuthenticatedManager = (req, res, next) => {
@@ -100,5 +84,3 @@ app.use('/adminDevis', require('./routes/adminDevisRoutes'));
 
 
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
-
-
