@@ -45,4 +45,16 @@ router.delete('/:id', async(req, res)=>{
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const adminDevis = await AdminDevis.findById(req.params.id);
+        if (!adminDevis) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+        }
+        res.json(adminDevis);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur', error });
+    }
+});
+
 module.exports = router;
