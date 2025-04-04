@@ -8,8 +8,14 @@ const VehiculeSchema = new mongoose.Schema({
     modele: { type: String, required: true },
     annee: { type: String, required: true },
     matricule: { type: String, required: true },
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    user: { type: String, required: true },
+    // user: {
+    //     userdetail: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    //     userid: { type: String, required: true }
+    // },
+    user: {
+        userdetail: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        userid: { type: String, required: true }
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Vehicule', VehiculeSchema);

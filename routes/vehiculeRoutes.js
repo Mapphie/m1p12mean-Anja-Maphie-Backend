@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Vehicule = require('../models/Vehicule');
-const mongoose = require('mongoose');
 
 
 //Créer un vehicule
@@ -47,13 +46,10 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.get('/byid-user/:user', async (req, res) => {
-    console.log({ user });
-    if (!mongoose.Types.ObjectId.isValid(user)) {
-        return res.status(400).json({ message: 'ID utilisateur invalide' });
-    }
+router.get('/byid-user/:userid', async (req, res) => {
+    const userid = req.params.userid;
     try {
-        const vehicles = await Vehicule.find({ user }).populate('user');
+        const vehicles = await Vehicule.find({ "user.userid": userid }).populate('user');
 
         if (vehicles.length > 0) {
             res.json(vehicles);
@@ -68,7 +64,7 @@ router.get('/byid-user/:user', async (req, res) => {
 router.get('/bymarque/:marque', async (req, res) => {
     const { marque } = req.params;
     console.log({ marque });
-    
+
     try {
         const vehicles = await Vehicule.find({ marque });
 
