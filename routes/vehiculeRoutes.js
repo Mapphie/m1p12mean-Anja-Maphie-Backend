@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Vehicule = require('../models/Vehicule');
+const mongoose = require('mongoose');
+
 
 //Créer un vehicule
 router.post('/', async (req, res) => {
@@ -44,6 +46,43 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+router.get('/byid-user/:user', async (req, res) => {
+    console.log({ user });
+    if (!mongoose.Types.ObjectId.isValid(user)) {
+        return res.status(400).json({ message: 'ID utilisateur invalide' });
+    }
+    try {
+        const vehicles = await Vehicule.find({ user }).populate('user');
+
+        if (vehicles.length > 0) {
+            res.json(vehicles);
+        } else {
+            res.status(404).json({ message: 'Aucun véhicule trouvé pour cette marque' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+router.get('/bymarque/:marque', async (req, res) => {
+    const { marque } = req.params;
+    console.log({ marque });
+    
+    try {
+        const vehicles = await Vehicule.find({ marque });
+
+        if (vehicles.length > 0) {
+            res.json(vehicles);
+        } else {
+            res.status(404).json({ message: 'Aucun véhicule trouvé pour cette marque' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+
 
 
 

@@ -45,6 +45,22 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+router.get('/byid-user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        const users = await User.findById(userId);
+
+        if (!users) {
+            return res.status(404).json({ message: "Utilisateur introuvable" });
+        }
+        
+        res.json(users);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+        res.status(500).json({ message: "Erreur serveur", error: error.message });
+    }
+});
 
 
 router.post('/login', async (req, res) => {
