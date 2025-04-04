@@ -16,9 +16,8 @@ const AdminDevisSchema = new mongoose.Schema({
     etat: { type: String, required: true },
     lignes: [{
         reference: { type: String, required: true,},
-          service: {
-                  Service: { type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true },
-              },
+          service:  {type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true },
+             
           description: {
             type: String, required: false,},
           remise: { type: Number,

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const AdminDevis = require('../models/adminDevis');
+const RendezVous = require('../models/rendezVous');
 
-//Créer un devis
+//Créer un rendezVous
 router.post('/', async(req, res) =>{
     try{
-        const devis = new AdminDevis(req.body);
-        await devis.save();
-        res.status(201).json(devis);
+        const rendezVous = new RendezVous(req.body);
+        await rendezVous.save();
+        res.status(201).json(rendezVous);
 
     }
     catch(error){
@@ -15,11 +15,11 @@ router.post('/', async(req, res) =>{
     }
 });
 
-// Lire tous les devis
+// Lire tous les rendezVous
 router.get('/', async(req, res) =>{
     try {
-        const devis = await AdminDevis.find();
-        res.json(devis);
+        const rendezVous = await RendezVous.find();
+        res.json(rendezVous);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -28,18 +28,18 @@ router.get('/', async(req, res) =>{
 //Mettre à jour un devis
 router.put('/:id', async(req,res) =>{
     try {
-        const devis = await AdminDevis.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.json(devis);
+        const rendezVous = await RendezVous.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        res.json(rendezVous);
     } catch (error) {
         res.status(400).json({message: error.message});
     }
 });
 
-//Supprimer un devis
+//Supprimer un rendezVous
 router.delete('/:id', async(req, res)=>{
     try {
-        await AdminDevis.findByIdAndDelete(req.params.id);
-        res.json({message:"devis supprimé"});
+        await RendezVous.findByIdAndDelete(req.params.id);
+        res.json({message:"Rendez-vous supprimé"});
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -47,11 +47,11 @@ router.delete('/:id', async(req, res)=>{
 
 router.get('/:id', async (req, res) => {
     try {
-        const adminDevis = await AdminDevis.findById(req.params.id);
-        if (!adminDevis) {
-            return res.status(404).json({ message: 'Devis non trouvé' });
+        const rendezVous = await RendezVous.findById(req.params.id);
+        if (!rendezVous) {
+            return res.status(404).json({ message: 'Rendez-vous non trouvé' });
         }
-        res.json(adminDevis);
+        res.json(rendezVous);
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur', error });
     }
