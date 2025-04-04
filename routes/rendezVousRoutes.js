@@ -18,7 +18,7 @@ router.post('/', async(req, res) =>{
 // Lire tous les rendezVous
 router.get('/', async(req, res) =>{
     try {
-        const rendezVous = await RendezVous.find();
+        const rendezVous = await RendezVous.find().populate("client").populate('service');
         res.json(rendezVous);
     } catch (error) {
         res.status(500).json({message: error.message});

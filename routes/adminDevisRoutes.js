@@ -5,7 +5,7 @@ const AdminDevis = require('../models/adminDevis');
 //Créer un devis
 router.post('/', async(req, res) =>{
     try{
-        const devis = new AdminDevis(req.body);
+        const devis = (await new AdminDevis(req.body));
         await devis.save();
         res.status(201).json(devis);
 
@@ -18,7 +18,10 @@ router.post('/', async(req, res) =>{
 // Lire tous les devis
 router.get('/', async(req, res) =>{
     try {
-        const devis = await AdminDevis.find();
+        const devis = await AdminDevis.find().populate('client')
+        .populate('manager')
+        .populate('vehicule')
+        .populate('lignes.service');
         res.json(devis);
     } catch (error) {
         res.status(500).json({message: error.message});
