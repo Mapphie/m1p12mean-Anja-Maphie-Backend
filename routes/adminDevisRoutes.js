@@ -50,7 +50,10 @@ router.delete('/:id', async(req, res)=>{
 
 router.get('/:id', async (req, res) => {
     try {
-        const adminDevis = await AdminDevis.findById(req.params.id);
+        const adminDevis = await AdminDevis.findById(req.params.id).populate('client')
+        .populate('manager')
+        .populate('vehicule')
+        .populate('lignes.service');
         if (!adminDevis) {
             return res.status(404).json({ message: 'Devis non trouvé' });
         }
