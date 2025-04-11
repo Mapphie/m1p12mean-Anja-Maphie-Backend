@@ -63,4 +63,24 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// modifier état
+router.put("/:id/etat", async (req, res) => {
+    try {
+      const { etat } = req.body
+      const devis = await AdminDevis.findByIdAndUpdate(req.params.id, { etat: etat }, { new: true })
+        .populate("client")
+        .populate("manager")
+        .populate("vehicule")
+        .populate("lignes.service")
+  
+      if (!devis) {
+        return res.status(404).json({ message: "Devis non trouvé" })
+      }
+  
+      res.json(devis)
+    } catch (error) {
+      res.status(400).json({ message: error.message })
+    }
+});
+
 module.exports = router;
