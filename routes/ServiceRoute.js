@@ -45,4 +45,16 @@ router.delete('/:id', async(req, res)=>{
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const service = await Service.findById(req.params.id);
+        if (!service) {
+            return res.status(404).json({ message: 'Service non trouvé' });
+        }
+        res.json(service);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur', error });
+    }
+});
+
 module.exports = router;

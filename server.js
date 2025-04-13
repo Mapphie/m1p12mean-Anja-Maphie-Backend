@@ -54,9 +54,9 @@ const isAuthenticatedClient = (req, res, next) => {
 
 //Routes
 
-app.use('/manager', isAuthenticatedManager);
-app.use('/client', isAuthenticatedClient);
-app.use('/mecanicien', isAuthenticatedMecanicien);
+// app.use('/manager', isAuthenticatedManager);
+// app.use('/client', isAuthenticatedClient);
+// app.use('/mecanicien', isAuthenticatedMecanicien);
 
 app.use('/articles', require('./routes/articleRoutes'));
 

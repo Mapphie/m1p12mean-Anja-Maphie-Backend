@@ -54,7 +54,7 @@ router.get('/byid-user/:userid', async (req, res) => {
         if (vehicles.length > 0) {
             res.json(vehicles);
         } else {
-            res.status(404).json({ message: 'Aucun véhicule trouvé pour cette marque' });
+            res.status(404).json({ message: 'Aucun véhicule trouvé pour cet utilisateur' });
         }
     } catch (error) {
         console.error(error);
