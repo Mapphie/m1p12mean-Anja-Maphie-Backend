@@ -15,7 +15,7 @@ const AdminDevisSchema = new mongoose.Schema({
     facture: {type: String, required: false},
     etat: { type: String, required: true },
     lignes: [{
-        reference: { type: String, required: true,},
+        // reference: { type: String, required: true,},
           service:  {type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true },
              
           description: {
@@ -26,7 +26,7 @@ const AdminDevisSchema = new mongoose.Schema({
           prixUnitaireHT: { type: Number, required: true,},
           taxe: { type: Number, required: true,},
           quantite: { type: Number, required: true,},
-          totalHT: { type: Number, required: true,},
+          // totalHT: { type: Number, required: true,},
           totalTTC: { type: Number, required: true,},}
       ],
 }, { timestamps: true });
