@@ -79,6 +79,17 @@ router.get('/bymarque/:marque', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const vehicule = await  Vehicule.findById(req.params.id);
+        if (!vehicule) {
+            return res.status(404).json({ message: 'Véhicule non trouvé' });
+        }
+        res.json(vehicule);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur', error });
+    }
+});
 
 
 
