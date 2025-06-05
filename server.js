@@ -85,6 +85,8 @@ app.use('/rendezVous', require('./routes/rendezVousRoutes'));
 
 app.use('/intervention', require('./routes/interventionRoutes'));
 
+app.use('/invoice', require('./routes/invoiceRoutes'));
+
 
 
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
