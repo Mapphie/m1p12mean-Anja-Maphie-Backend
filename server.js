@@ -82,6 +82,9 @@ app.use('/client/vehicules', require('./routes/vehiculeRoutes'));
 
 app.use('/adminDevis', require('./routes/adminDevisRoutes'));
 app.use('/rendezVous', require('./routes/rendezVousRoutes'));
+app.use('/invoice', require('./routes/invoiceRoutes'));
+app.use('/intervention', require('./routes/interventionRoutes'));
+
 
 app.use('/intervention', require('./routes/interventionRoutes'));
 
