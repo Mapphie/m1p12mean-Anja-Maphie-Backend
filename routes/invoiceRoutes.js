@@ -47,7 +47,7 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.get('/byid-invoice/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const invoice = await Invoice.findById(req.params.id)
             .populate('client')
