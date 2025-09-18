@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Invoice = require('../models/Invoice');
 
+router.get('/last', async (req, res) => {
+    try {
+        // Récupérer la facture la plus récente par date de création
+        const lastInvoice = await Invoice.findOne()
+            .sort({ dateCreation: -1 }) // trie décroissant par date
+            .exec();
+
+        res.json(lastInvoice || null);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la dernière facture:', error);
+        res.status(500).json({ message: "Erreur serveur", error: error.message });
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const invoice = new Invoice(req.body);
@@ -90,5 +104,8 @@ router.get('/clientinvoice', async (req, res) => {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
     }
 });
+
+
+
 
 module.exports = router;
